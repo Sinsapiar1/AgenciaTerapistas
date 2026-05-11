@@ -316,6 +316,13 @@ input, textarea, select {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    z-index: var(--z-tooltip);
+    position: relative;
+}
+
+.nav__menu {
+    display: flex;
+    align-items: center;
 }
 
 .nav__list {
@@ -391,9 +398,33 @@ input, textarea, select {
 .nav__toggle,
 .nav__close {
     display: none;
-    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
     color: var(--dark-900);
     cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.nav__toggle:hover,
+.nav__close:hover {
+    background: var(--gray-100);
+}
+
+/* Iconos SVG para hamburguesa y cerrar */
+.nav__toggle::before {
+    content: '☰';
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.nav__close::before {
+    content: '✕';
+    font-size: 1.5rem;
+    line-height: 1;
 }
 
 /* ============================================
@@ -429,6 +460,7 @@ input, textarea, select {
     padding: 0.5rem 1rem;
     border-radius: var(--radius-full);
     margin-bottom: var(--space-lg);
+    animation: fadeInUp 0.6s ease-out;
 }
 
 .hero__title {
@@ -436,6 +468,7 @@ input, textarea, select {
     font-weight: var(--fw-extrabold);
     line-height: 1.1;
     margin-bottom: var(--space-lg);
+    animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .hero__title--gradient {
@@ -452,17 +485,20 @@ input, textarea, select {
     line-height: 1.8;
     margin-bottom: var(--space-xl);
     max-width: 600px;
+    animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 .hero__buttons {
     display: flex;
     gap: var(--space-md);
     margin-bottom: var(--space-3xl);
+    animation: fadeInUp 0.6s ease-out 0.6s both;
 }
 
 .hero__stats {
     display: flex;
     gap: var(--space-2xl);
+    animation: fadeInUp 0.6s ease-out 0.8s both;
 }
 
 .stat {
@@ -486,6 +522,7 @@ input, textarea, select {
 .hero__image {
     position: relative;
     z-index: 2;
+    animation: fadeInRight 0.8s ease-out 0.4s both;
 }
 
 .hero__image-wrapper {
@@ -493,6 +530,11 @@ input, textarea, select {
     border-radius: var(--radius-2xl);
     overflow: hidden;
     box-shadow: var(--shadow-2xl);
+    transition: transform var(--transition-slow);
+}
+
+.hero__image-wrapper:hover {
+    transform: scale(1.02);
 }
 
 .hero__image-wrapper img {
@@ -514,6 +556,7 @@ input, textarea, select {
     gap: var(--space-sm);
     font-weight: var(--fw-semibold);
     color: var(--dark-900);
+    animation: pulse 2s ease-in-out infinite;
 }
 
 .hero__badge svg {
@@ -538,6 +581,50 @@ input, textarea, select {
     height: 800px;
     background: radial-gradient(circle, rgba(0, 102, 204, 0.08) 0%, transparent 70%);
     border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 /* ============================================
@@ -603,6 +690,11 @@ input, textarea, select {
     justify-content: center;
     margin-bottom: var(--space-lg);
     color: var(--primary-color);
+    transition: transform var(--transition-base);
+}
+
+.service-card:hover .service-card__icon {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .service-card--featured .service-card__icon {
@@ -679,6 +771,11 @@ input, textarea, select {
 .feature-item {
     display: flex;
     gap: var(--space-md);
+    transition: transform var(--transition-base);
+}
+
+.feature-item:hover {
+    transform: translateX(8px);
 }
 
 .feature-item__icon {
@@ -691,6 +788,13 @@ input, textarea, select {
     justify-content: center;
     color: var(--primary-color);
     flex-shrink: 0;
+    transition: all var(--transition-base);
+}
+
+.feature-item:hover .feature-item__icon {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.1);
 }
 
 .feature-item__title {
@@ -716,6 +820,11 @@ input, textarea, select {
     width: 100%;
     height: auto;
     object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.why-us__image-wrapper:hover img {
+    transform: scale(1.05);
 }
 
 .why-us__stats-card {
@@ -790,6 +899,13 @@ input, textarea, select {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    transition: all var(--transition-base);
+    border-radius: var(--radius-sm);
+}
+
+.locations-grid li:hover {
+    background: var(--gray-100);
+    transform: translateX(4px);
 }
 
 .locations-grid li::before {
@@ -907,6 +1023,11 @@ input, textarea, select {
     display: flex;
     gap: var(--space-md);
     align-items: flex-start;
+    transition: transform var(--transition-base);
+}
+
+.contact__detail:hover {
+    transform: translateX(8px);
 }
 
 .contact__detail-icon {
@@ -1069,7 +1190,7 @@ input, textarea, select {
 .footer__list a {
     font-size: var(--text-base);
     color: var(--gray-400);
-    transition: color var(--transition-base);
+    transition: all var(--transition-base);
     padding: 0.25rem 0;
 }
 
@@ -1166,20 +1287,23 @@ input, textarea, select {
     :root {
         --space-4xl: 3rem;
         --space-3xl: 2rem;
+        --container-padding: 1rem;
     }
     
+    /* Mobile Navigation */
     .nav__menu {
         position: fixed;
         top: 0;
         right: -100%;
         width: 80%;
-        max-width: 400px;
+        max-width: 350px;
         height: 100vh;
         background: var(--white);
-        padding: var(--space-2xl);
+        padding: var(--space-3xl) var(--space-xl);
         transition: right var(--transition-base);
-        box-shadow: var(--shadow-2xl);
-        z-index: var(--z-fixed);
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+        z-index: var(--z-modal);
+        overflow-y: auto;
     }
     
     .nav__menu.show-menu {
@@ -1190,14 +1314,26 @@ input, textarea, select {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--space-lg);
+        margin-top: var(--space-2xl);
     }
     
-    .nav__toggle,
-    .nav__close {
-        display: block;
+    .nav__link {
+        font-size: var(--text-lg);
+        padding: var(--space-sm) 0;
+        width: 100%;
+    }
+    
+    .nav__link::after {
+        bottom: 0;
+    }
+    
+    .nav__toggle {
+        display: flex;
+        z-index: var(--z-tooltip);
     }
     
     .nav__close {
+        display: flex;
         position: absolute;
         top: var(--space-lg);
         right: var(--space-lg);
@@ -1205,7 +1341,10 @@ input, textarea, select {
     
     .lang-toggle {
         margin-left: 0;
-        margin-top: var(--space-lg);
+        margin-top: var(--space-xl);
+        width: 100%;
+        height: 56px;
+        font-size: var(--text-lg);
     }
     
     .hero__title {
@@ -1242,6 +1381,10 @@ input, textarea, select {
     .section__title {
         font-size: var(--text-3xl);
     }
+    
+    .locations-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1256,5 +1399,24 @@ input, textarea, select {
     .btn {
         padding: 0.75rem 1.5rem;
         font-size: var(--text-sm);
+    }
+    
+    .stat__number {
+        font-size: var(--text-2xl);
+    }
+    
+    .hero__badge {
+        bottom: var(--space-md);
+        left: var(--space-md);
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-xs);
+    }
+    
+    .why-us__stats-card {
+        bottom: var(--space-md);
+        right: var(--space-md);
+        padding: var(--space-md);
+        flex-direction: column;
+        gap: var(--space-md);
     }
 }
