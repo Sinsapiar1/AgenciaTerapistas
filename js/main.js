@@ -10,7 +10,7 @@
        STATE MANAGEMENT
        ============================================ */
     const state = {
-        currentLang: 'es', // Default language: Spanish
+        currentLang: 'en', // Default language: English (CHANGED FROM Spanish)
         menuOpen: false,
         scrolled: false
     };
@@ -92,12 +92,16 @@
        LANGUAGE TOGGLE FUNCTIONALITY
        ============================================ */
     function initLanguageToggle() {
-        // Load saved language preference
+        // Load saved language preference OR default to English
         const savedLang = localStorage.getItem('preferredLanguage');
         if (savedLang && (savedLang === 'en' || savedLang === 'es')) {
             state.currentLang = savedLang;
-            updateLanguage(savedLang);
+        } else {
+            // Set English as default and save it
+            state.currentLang = 'en';
+            localStorage.setItem('preferredLanguage', 'en');
         }
+        updateLanguage(state.currentLang);
 
         // Language toggle click
         if (elements.langToggle) {
@@ -509,7 +513,7 @@
        INITIALIZE ALL FUNCTIONALITY
        ============================================ */
     function init() {
-        console.log('🚀 Agencia Terapistas RBT - Website Initialized');
+        console.log('🚀 ABA Agencies Miami - Website Initialized');
         
         initMobileMenu();
         initLanguageToggle();
