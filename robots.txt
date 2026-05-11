@@ -1,0 +1,23 @@
+# robots.txt para Agencia Terapistas RBT
+# https://agenciaterapistas.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://agenciaterapistas.com/sitemap.xml
+
+# Crawl-delay (opcional, para evitar sobrecarga del servidor)
+Crawl-delay: 1
+
+# Bloquear archivos sensibles (si los hubiera)
+Disallow: /admin/
+Disallow: /private/
+Disallow: *.json$
+Disallow: /*.php$
+
+# Permitir acceso a recursos importantes para SEO
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Allow: /favicon.svg
