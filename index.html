@@ -746,17 +746,90 @@
                             <input type="text" id="child-age" name="child-age" class="form__input" data-en-placeholder="5 years old" data-es-placeholder="5 años">
                         </div>
                         
-                        <div class="form__group">
-                            <label for="service" class="form__label" data-en="Service Interested In" data-es="Servicio de Interés">Servicio de Interés</label>
-                            <select id="service" name="service" class="form__input">
-                                <option value="" data-en="Select a service" data-es="Seleccione un servicio">Seleccione un servicio</option>
-                                <option value="home-aba" data-en="In-Home ABA Therapy" data-es="Terapia ABA en Casa">Terapia ABA en Casa</option>
-                                <option value="early-intervention" data-en="Early Intervention" data-es="Intervención Temprana">Intervención Temprana</option>
-                                <option value="school-support" data-en="School Support" data-es="Apoyo Escolar">Apoyo Escolar</option>
-                                <option value="social-skills" data-en="Social Skills Groups" data-es="Grupos de Habilidades Sociales">Grupos de Habilidades Sociales</option>
-                                <option value="parent-training" data-en="Parent Training" data-es="Entrenamiento para Padres">Entrenamiento para Padres</option>
-                                <option value="assessment" data-en="Assessment & Evaluation" data-es="Evaluación">Evaluación</option>
+                        <div class="form__group form__group--full">
+                            <label class="form__label" id="service-label" data-en="Service Interested In" data-es="Servicio de Interés">Servicio de Interés</label>
+
+                            <!-- Hidden native select — keeps form submission intact -->
+                            <select id="service" name="service" class="form__select-native" tabindex="-1" aria-hidden="true">
+                                <option value="">Seleccione un servicio</option>
+                                <option value="home-aba">Terapia ABA en Casa</option>
+                                <option value="early-intervention">Intervención Temprana</option>
+                                <option value="school-support">Apoyo Escolar</option>
+                                <option value="social-skills">Grupos de Habilidades Sociales</option>
+                                <option value="parent-training">Entrenamiento para Padres</option>
+                                <option value="assessment">Evaluación</option>
                             </select>
+
+                            <!-- Custom accessible dropdown -->
+                            <div class="form__select" id="service-select"
+                                 role="combobox"
+                                 aria-expanded="false"
+                                 aria-haspopup="listbox"
+                                 aria-labelledby="service-label"
+                                 aria-controls="service-listbox"
+                                 tabindex="0">
+
+                                <div class="form__select-trigger">
+                                    <span class="form__select-value"
+                                          data-en="Select a service"
+                                          data-es="Seleccione un servicio">Seleccione un servicio</span>
+                                    <svg class="form__select-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                                        <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+
+                                <ul class="form__select-dropdown" id="service-listbox" role="listbox" aria-labelledby="service-label">
+
+                                    <li class="form__select-option" role="option" aria-selected="false" data-value="home-aba" tabindex="-1">
+                                        <span class="form__select-option-icon" style="background:rgba(0,102,204,.1);color:#0066CC">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 9.5L12 3L21 9.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V12h6v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </span>
+                                        <span class="form__select-option-text" data-en="In-Home ABA Therapy" data-es="Terapia ABA en Casa">Terapia ABA en Casa</span>
+                                        <svg class="form__select-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </li>
+
+                                    <li class="form__select-option" role="option" aria-selected="false" data-value="early-intervention" tabindex="-1">
+                                        <span class="form__select-option-icon" style="background:rgba(0,168,132,.1);color:#00A884">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </span>
+                                        <span class="form__select-option-text" data-en="Early Intervention" data-es="Intervención Temprana">Intervención Temprana</span>
+                                        <svg class="form__select-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </li>
+
+                                    <li class="form__select-option" role="option" aria-selected="false" data-value="school-support" tabindex="-1">
+                                        <span class="form__select-option-icon" style="background:rgba(255,107,53,.1);color:#FF6B35">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </span>
+                                        <span class="form__select-option-text" data-en="School Support" data-es="Apoyo Escolar">Apoyo Escolar</span>
+                                        <svg class="form__select-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </li>
+
+                                    <li class="form__select-option" role="option" aria-selected="false" data-value="social-skills" tabindex="-1">
+                                        <span class="form__select-option-icon" style="background:rgba(139,92,246,.1);color:#8B5CF6">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </span>
+                                        <span class="form__select-option-text" data-en="Social Skills Groups" data-es="Grupos de Habilidades Sociales">Grupos de Habilidades Sociales</span>
+                                        <svg class="form__select-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </li>
+
+                                    <li class="form__select-option" role="option" aria-selected="false" data-value="parent-training" tabindex="-1">
+                                        <span class="form__select-option-icon" style="background:rgba(239,68,68,.1);color:#EF4444">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </span>
+                                        <span class="form__select-option-text" data-en="Parent Training" data-es="Entrenamiento para Padres">Entrenamiento para Padres</span>
+                                        <svg class="form__select-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </li>
+
+                                    <li class="form__select-option" role="option" aria-selected="false" data-value="assessment" tabindex="-1">
+                                        <span class="form__select-option-icon" style="background:rgba(245,158,11,.1);color:#F59E0B">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </span>
+                                        <span class="form__select-option-text" data-en="Assessment &amp; Evaluation" data-es="Evaluación">Evaluación</span>
+                                        <svg class="form__select-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
                         
                         <div class="form__group form__group--full">

@@ -1258,6 +1258,216 @@ body.menu-open {
 }
 
 /* ============================================
+   CUSTOM SELECT DROPDOWN
+   ============================================ */
+
+/* Hide the native select while keeping it in the DOM for form submission */
+.form__select-native {
+    display: none;
+}
+
+/* Outer wrapper — positions the trigger + floating panel */
+.form__select {
+    position: relative;
+    width: 100%;
+    outline: none;
+}
+
+/* ---- Trigger ---- */
+.form__select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    cursor: pointer;
+    user-select: none;
+    min-height: 52px;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, border-radius 0.15s ease;
+}
+
+.form__select:hover .form__select-trigger,
+.form__select:focus .form__select-trigger {
+    border-color: var(--primary-color);
+}
+
+/* When open: square bottom corners so it merges with the panel */
+.form__select.open .form__select-trigger {
+    border-color: var(--primary-color);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.12);
+}
+
+/* Placeholder vs selected text */
+.form__select-value {
+    flex: 1;
+    font-size: var(--text-base);
+    color: var(--gray-500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+}
+
+.form__select.has-value .form__select-value {
+    color: var(--dark-900);
+    font-weight: var(--fw-medium);
+}
+
+/* Rotating chevron */
+.form__select-arrow {
+    width: 18px;
+    height: 18px;
+    color: var(--gray-400);
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+
+.form__select.open .form__select-arrow {
+    transform: rotate(180deg);
+    color: var(--primary-color);
+}
+
+/* ---- Dropdown panel ---- */
+.form__select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 2px solid var(--primary-color);
+    border-top: none;
+    border-bottom-left-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+    box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.18),
+                0 4px 12px rgba(0, 102, 204, 0.08);
+    z-index: var(--z-dropdown);
+    list-style: none;
+    padding: var(--space-xs) 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.2s;
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gray-300) transparent;
+}
+
+.form__select-dropdown::-webkit-scrollbar { width: 4px; }
+.form__select-dropdown::-webkit-scrollbar-track { background: transparent; }
+.form__select-dropdown::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
+
+.form__select.open .form__select-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ---- Individual option ---- */
+.form__select-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6875rem 1rem;
+    cursor: pointer;
+    outline: none;
+    border-bottom: 1px solid var(--gray-100);
+    transition: background 0.15s ease;
+    position: relative;
+}
+
+.form__select-option:last-child {
+    border-bottom: none;
+}
+
+/* Blue left accent bar on hover */
+.form__select-option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary-color);
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.form__select-option:hover,
+.form__select-option:focus {
+    background: rgba(0, 102, 204, 0.06);
+}
+
+.form__select-option:hover::before,
+.form__select-option:focus::before {
+    opacity: 1;
+}
+
+/* Selected state */
+.form__select-option.selected {
+    background: rgba(0, 102, 204, 0.05);
+}
+
+.form__select-option.selected::before {
+    opacity: 1;
+}
+
+/* Icon badge */
+.form__select-option-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Option label text */
+.form__select-option-text {
+    flex: 1;
+    font-size: var(--text-sm);
+    font-weight: var(--fw-medium);
+    color: var(--dark-700);
+    transition: color 0.15s ease;
+    line-height: 1.4;
+}
+
+.form__select-option:hover .form__select-option-text,
+.form__select-option:focus .form__select-option-text {
+    color: var(--primary-color);
+}
+
+.form__select-option.selected .form__select-option-text {
+    color: var(--primary-color);
+    font-weight: var(--fw-semibold);
+}
+
+/* Checkmark — visible only on selected option */
+.form__select-check {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    color: var(--primary-color);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.form__select-option.selected .form__select-check {
+    opacity: 1;
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 .footer {

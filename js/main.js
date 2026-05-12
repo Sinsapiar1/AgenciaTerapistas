@@ -517,6 +517,122 @@
     }
 
     /* ============================================
+       CUSTOM SELECT DROPDOWN
+       ============================================ */
+    function initCustomSelect() {
+        const wrapper   = document.getElementById('service-select');
+        const native    = document.getElementById('service');
+        if (!wrapper || !native) return;
+
+        const trigger   = wrapper.querySelector('.form__select-trigger');
+        const valueSpan = wrapper.querySelector('.form__select-value');
+        const dropdown  = wrapper.querySelector('.form__select-dropdown');
+        const options   = Array.from(wrapper.querySelectorAll('.form__select-option'));
+
+        function openSelect() {
+            wrapper.classList.add('open');
+            wrapper.setAttribute('aria-expanded', 'true');
+            const current = wrapper.querySelector('.form__select-option.selected') || options[0];
+            current.focus();
+        }
+
+        function closeSelect() {
+            wrapper.classList.remove('open');
+            wrapper.setAttribute('aria-expanded', 'false');
+        }
+
+        function pickOption(option) {
+            const value    = option.dataset.value;
+            const textSpan = option.querySelector('.form__select-option-text');
+
+            // Sync hidden native select for form submission
+            native.value = value;
+
+            // Update trigger text and its i18n data-attributes so language switching works
+            valueSpan.dataset.en = textSpan.dataset.en || textSpan.textContent;
+            valueSpan.dataset.es = textSpan.dataset.es || textSpan.textContent;
+            valueSpan.textContent = state.currentLang === 'es'
+                ? (textSpan.dataset.es || textSpan.textContent)
+                : (textSpan.dataset.en || textSpan.textContent);
+
+            // Mark selected state
+            options.forEach(o => {
+                o.classList.remove('selected');
+                o.setAttribute('aria-selected', 'false');
+            });
+            option.classList.add('selected');
+            option.setAttribute('aria-selected', 'true');
+
+            wrapper.classList.add('has-value');
+            closeSelect();
+            wrapper.focus();
+        }
+
+        // Toggle on trigger click
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            wrapper.classList.contains('open') ? closeSelect() : openSelect();
+        });
+
+        // Option click
+        options.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                pickOption(opt);
+            });
+        });
+
+        // Keyboard on wrapper
+        wrapper.addEventListener('keydown', (e) => {
+            const isOpen = wrapper.classList.contains('open');
+            const focused = dropdown.querySelector('.form__select-option:focus');
+            const idx = focused ? options.indexOf(focused) : -1;
+
+            switch (e.key) {
+                case 'Enter':
+                case ' ':
+                    e.preventDefault();
+                    if (!isOpen) { openSelect(); break; }
+                    if (focused) pickOption(focused);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (!isOpen) { openSelect(); break; }
+                    options[Math.min(idx + 1, options.length - 1)].focus();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (!isOpen) break;
+                    if (idx > 0) options[idx - 1].focus();
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    closeSelect();
+                    wrapper.focus();
+                    break;
+                case 'Tab':
+                    if (isOpen) closeSelect();
+                    break;
+            }
+        });
+
+        // Keyboard on each option (for Enter/Space while focused)
+        options.forEach(opt => {
+            opt.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    pickOption(opt);
+                }
+            });
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!wrapper.contains(e.target)) closeSelect();
+        });
+    }
+
+    /* ============================================
        PERFORMANCE OPTIMIZATION
        ============================================ */
     function optimizePerformance() {
@@ -547,6 +663,7 @@
         initSmoothScroll();
         initContactForm();
         initFormValidation();
+        initCustomSelect();
         initScrollAnimations();
         optimizePerformance();
 
