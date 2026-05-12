@@ -42,6 +42,7 @@
         navMenu: document.getElementById('nav-menu'),
         navToggle: document.getElementById('nav-toggle'),
         navClose: document.getElementById('nav-close'),
+        navOverlay: document.getElementById('nav-overlay'),
         navLinks: document.querySelectorAll('.nav__link'),
         langToggle: document.getElementById('lang-toggle'),
         contactForm: document.getElementById('contact-form'),
@@ -53,37 +54,61 @@
        MOBILE MENU FUNCTIONALITY
        ============================================ */
     function initMobileMenu() {
-        // Open menu
+        function openMenu() {
+            elements.navMenu.classList.add('show-menu');
+            elements.navToggle.classList.add('active');
+            elements.navToggle.setAttribute('aria-expanded', 'true');
+            if (elements.navOverlay) elements.navOverlay.classList.add('show');
+            document.body.classList.add('menu-open');
+            state.menuOpen = true;
+        }
+
+        function closeMenu() {
+            elements.navMenu.classList.remove('show-menu');
+            elements.navToggle.classList.remove('active');
+            elements.navToggle.setAttribute('aria-expanded', 'false');
+            if (elements.navOverlay) elements.navOverlay.classList.remove('show');
+            document.body.classList.remove('menu-open');
+            state.menuOpen = false;
+        }
+
         if (elements.navToggle) {
             elements.navToggle.addEventListener('click', () => {
-                elements.navMenu.classList.add('show-menu');
-                state.menuOpen = true;
+                state.menuOpen ? closeMenu() : openMenu();
+            });
+            elements.navToggle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    state.menuOpen ? closeMenu() : openMenu();
+                }
             });
         }
 
-        // Close menu
         if (elements.navClose) {
-            elements.navClose.addEventListener('click', () => {
-                elements.navMenu.classList.remove('show-menu');
-                state.menuOpen = false;
+            elements.navClose.addEventListener('click', closeMenu);
+            elements.navClose.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    closeMenu();
+                }
             });
         }
 
-        // Close menu when clicking nav link
+        // Close on overlay click
+        if (elements.navOverlay) {
+            elements.navOverlay.addEventListener('click', closeMenu);
+        }
+
+        // Close when clicking a nav link
         elements.navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                elements.navMenu.classList.remove('show-menu');
-                state.menuOpen = false;
-            });
+            link.addEventListener('click', closeMenu);
         });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (state.menuOpen && 
-                !elements.navMenu.contains(e.target) && 
-                !elements.navToggle.contains(e.target)) {
-                elements.navMenu.classList.remove('show-menu');
-                state.menuOpen = false;
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && state.menuOpen) {
+                closeMenu();
+                elements.navToggle.focus();
             }
         });
     }
