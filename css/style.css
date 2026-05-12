@@ -541,14 +541,16 @@ input, textarea, select {
     display: contents;
 }
 
-/* Fullscreen backdrop overlay */
+/* Fullscreen backdrop overlay
+   Must sit BELOW the header (z-fixed = 1030) so the menu drawer
+   (which lives inside the header stacking context) appears above it. */
 .nav__overlay {
     position: fixed;
     inset: 0;
     background: rgba(10, 24, 40, 0.6);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    z-index: calc(var(--z-modal) - 1);
+    z-index: calc(var(--z-fixed) - 1);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.35s ease, visibility 0.35s ease;
