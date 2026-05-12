@@ -339,7 +339,7 @@
                 submitButton.textContent = state.currentLang === 'es' ? 'Enviando...' : 'Sending...';
 
                 // IMPORTANT: Replace this webhook URL with your actual Make.com webhook
-                const webhookUrl = 'YOUR_MAKE_COM_WEBHOOK_URL_HERE';
+                const webhookUrl = 'https://hook.us2.make.com/rnbh454atbusjt7xquh1e9o77wdy4vc8';
                 
                 const response = await fetch(webhookUrl, {
                     method: 'POST',
