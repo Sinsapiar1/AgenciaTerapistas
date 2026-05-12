@@ -1420,3 +1420,106 @@ input, textarea, select {
         gap: var(--space-md);
     }
 }
+
+
+/* ============================================
+   COVERAGE SECTION - PROFESSIONAL REGION CARDS  
+   ============================================ */
+.coverage__regions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+}
+
+.region-card {
+    background: var(--white);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 2px solid transparent;
+    transition: all var(--transition-base);
+}
+
+.region-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.region-card__icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(0, 102, 204, 0.1);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    margin-bottom: var(--space-lg);
+}
+
+.region-card__title {
+    font-size: var(--text-xl);
+    font-weight: var(--fw-bold);
+    color: var(--dark-900);
+    margin-bottom: var(--space-lg);
+}
+
+.region-card__cities {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+}
+
+.region-card__cities li {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--dark-700);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    transition: all var(--transition-base);
+}
+
+.region-card__cities li:hover {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(4px);
+}
+
+.region-card__cities li::before {
+    content: '→';
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.coverage__cta {
+    text-align: center;
+    background: linear-gradient(135deg, var(--gray-100), var(--white));
+    padding: var(--space-3xl) var(--space-2xl);
+    border-radius: var(--radius-xl);
+    border: 2px dashed var(--gray-300);
+    transition: all var(--transition-base);
+}
+
+.coverage__cta:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.coverage__cta-text {
+    font-size: var(--text-lg);
+    color: var(--dark-700);
+    margin-bottom: var(--space-lg);
+    font-weight: var(--fw-medium);
+}
+
+@media screen and (max-width: 768px) {
+    .coverage__regions {
+        grid-template-columns: 1fr;
+    }
+}
